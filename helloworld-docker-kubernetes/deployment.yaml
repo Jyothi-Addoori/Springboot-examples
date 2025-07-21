@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: jyothifirstdocker/springbootexample:latest
+        image: jyothifirstdocker/spring-docker-kube:latest
         ports:
         - containerPort: 9090
