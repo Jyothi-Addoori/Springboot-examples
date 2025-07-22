@@ -16,7 +16,7 @@ pipeline {
                 }
             }
         }
-    stages {
+
         stage('change project to docker project') {
             steps {
                 script {
