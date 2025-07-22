@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('change project to docker project') {
+  /*      stage('change project to docker project') {
             steps {
                 sh "pwd"
                 dir('helloworld-docker-kubernetes') {
@@ -25,11 +25,11 @@ pipeline {
                 }
                 sh "pwd"
             }
-        }
+        }*/
 
         stage('Build and Test') {
             steps {
-                script {
+                dir('helloworld-docker-kubernetes') {
                     sh "mvn clean package"
                 }
             }
