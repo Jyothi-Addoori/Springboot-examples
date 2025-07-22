@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
+                    sh "helloworld-docker-kubernetes"
                 }
             }
         }
