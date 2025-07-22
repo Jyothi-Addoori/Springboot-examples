@@ -13,9 +13,18 @@ pipeline {
             steps {
                 script {
                     checkout scm
+                }
+            }
+        }
+    stages {
+        stage('change project to docker project') {
+            steps {
+                script {
                      def workspace = pwd()
                      sh "echo ${workspace}"
-                     sh "cd helloworld-docker-kubernetes"
+                     sh "ls -ltr"
+                     sh "cd Springboot-examples/helloworld-docker-kubernetes"
+                     sh "ls -ltr"
                 }
             }
         }
