@@ -23,7 +23,7 @@ pipeline {
                      def workspace = pwd()
                      sh "echo ${workspace}"
                      sh "ls -ltr"
-                     sh "cd Springboot-examples/helloworld-docker-kubernetes"
+                     sh "cd helloworld-docker-kubernetes"
                      sh "ls -ltr"
                 }
             }
