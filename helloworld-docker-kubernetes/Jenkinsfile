@@ -13,8 +13,9 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    pwd()
-                    sh "helloworld-docker-kubernetes"
+                     def workspace = pwd()
+                     sh "echo ${workspace}"
+                     sh "cd helloworld-docker-kubernetes"
                 }
             }
         }
