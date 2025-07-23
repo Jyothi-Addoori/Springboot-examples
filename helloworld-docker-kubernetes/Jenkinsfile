@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
 //add kubeconfig file data as secret text
-                     kubeconfig(credentialsId: 'kubeconfig_file') {
+                     kubeconfig(credentialsId: 'kubeconfig_file_new') {
 
                         sh 'kubectl apply -f deployment.yaml -n ${env.K8S_NAMESPACE}'
                         sh 'kubectl apply -f service.yaml -n ${env.K8S_NAMESPACE}'
