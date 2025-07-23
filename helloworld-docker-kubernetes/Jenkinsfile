@@ -62,7 +62,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                script {
+                dir('helloworld-docker-kubernetes') {
 //add kubeconfig file data as secret text
                      kubeconfig(credentialsId: 'kubeconfig_file_new') {
 
