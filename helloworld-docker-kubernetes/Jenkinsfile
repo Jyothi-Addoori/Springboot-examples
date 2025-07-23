@@ -62,15 +62,16 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                dir('helloworld-docker-kubernetes') {
-//add kubeconfig file data as secret text
+                script {
+                    //add kubeconfig file data as secret text
                      kubeconfig(credentialsId: 'kubeconfig_file_new') {
+                     dir('helloworld-docker-kubernetes') {
+                            sh 'kubectl apply -f deployment.yaml -n ${env.K8S_NAMESPACE}'
+                            sh 'kubectl apply -f service.yaml -n ${env.K8S_NAMESPACE}'
+                         }
 
-                        sh 'kubectl apply -f deployment.yaml -n ${env.K8S_NAMESPACE}'
-                        sh 'kubectl apply -f service.yaml -n ${env.K8S_NAMESPACE}'
                     }
-
-                        
+       
                 }
             }
         }
