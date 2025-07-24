@@ -17,9 +17,19 @@ pipeline {
             }
         }
 
+  /*      stage('change project to docker project') {
+            steps {
+                sh "pwd"
+                dir('helloworld-docker-kubernetes') {
+                sh "pwd"
+                }
+                sh "pwd"
+            }
+        }*/
+
         stage('Build and Test') {
             steps {
-                script {
+                dir('helloworld-docker-kubernetes') {
                     sh "mvn clean package"
                 }
             }
@@ -27,7 +37,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
+                 dir('helloworld-docker-kubernetes') {
                     sh "docker build -t jyothifirstdocker/spring-docker-kube:${env.BUILD_ID} ."
                     sh "docker tag jyothifirstdocker/spring-docker-kube:${env.BUILD_ID} jyothifirstdocker/spring-docker-kube:latest"
                 }
@@ -37,7 +47,8 @@ pipeline {
         stage('Push to dockerhub') {
             steps {
                 script {
-                       withCredentials([string(credentialsId: 'dockerhub-password', variable: 'DOCKER_PASSWORD')]) {
+                       withCredentials([string(credentialsId: 'dockerhub-passwrd', variable: 'DOCKER_PASSWORD')]) {
+                sh "echo $DOCKER_PASSWORD"          
                 sh """
                     echo \$DOCKER_PASSWORD | docker login -u jyothifirstdocker --password-stdin
                 """
@@ -52,14 +63,15 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    //add kubeconfig file data as secret text
+                     kubeconfig(credentialsId: 'kubeconfig_file_new') {
+                     dir('helloworld-docker-kubernetes') {
+                            sh "kubectl apply -f deployment.yaml -n ${env.K8S_NAMESPACE}"
+                            sh "kubectl apply -f service.yaml -n ${env.K8S_NAMESPACE}"
+                         }
 
-                     kubeconfig(credentialsId: 'kubeconfig') {
-
-                        sh 'kubectl apply -f deployment.yaml -n ${env.K8S_NAMESPACE}'
-                        sh 'kubectl apply -f service.yaml -n ${env.K8S_NAMESPACE}'
                     }
-
-                        
+       
                 }
             }
         }
