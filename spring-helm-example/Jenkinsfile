@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                script {
+                dir('helloworld-docker-kubernetes') {
                     sh "mvn clean package"
                 }
             }
@@ -51,7 +51,9 @@ pipeline {
         stage('Helm Deployment') {
             steps {
                script{
+                   dir('helloworld-docker-kubernetes') {
                    sh "helm install spring-helm-example-svc --namespace helmdemo"
+                   }
                   
                }
             }
