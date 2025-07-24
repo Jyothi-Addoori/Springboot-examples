@@ -37,7 +37,7 @@ pipeline {
         stage('Push to dockerhub') {
             steps {
                 script {
-                       withCredentials([string(credentialsId: 'dockerhub-password', variable: 'DOCKER_PASSWORD')]) {
+                       withCredentials([string(credentialsId: 'dockerhub-passwrd', variable: 'DOCKER_PASSWORD')]) {
                 sh """
                     echo \$DOCKER_PASSWORD | docker login -u jyothifirstdocker --password-stdin
                 """
