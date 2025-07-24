@@ -27,7 +27,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
+                dir('spring-helm-example') {
                     sh "docker build -t jyothifirstdocker/spring-docker-kube:${env.BUILD_ID} ."
                     sh "docker tag jyothifirstdocker/spring-docker-kube:${env.BUILD_ID} jyothifirstdocker/spring-docker-kube:latest"
                 }
